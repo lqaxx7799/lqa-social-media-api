@@ -3,6 +3,8 @@ package com.example.demo.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -31,7 +33,8 @@ public class Post implements Serializable {
 	private Date createdTime;
 
 	@Column(name="is_deleted")
-	private byte isDeleted;
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isDeleted;
 
 	@Lob
 	@Column(name="thumbnail_url")
@@ -77,11 +80,11 @@ public class Post implements Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public byte getIsDeleted() {
+	public boolean getIsDeleted() {
 		return this.isDeleted;
 	}
 
-	public void setIsDeleted(byte isDeleted) {
+	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 

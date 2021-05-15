@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+
 import java.util.Date;
 
 
@@ -26,7 +29,8 @@ public class Comment implements Serializable {
 	private Date createdTime;
 
 	@Column(name="is_deleted")
-	private byte isDeleted;
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isDeleted;
 
 	//bi-directional many-to-one association to Post
 	@ManyToOne
@@ -63,11 +67,11 @@ public class Comment implements Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public byte getIsDeleted() {
+	public boolean getIsDeleted() {
 		return this.isDeleted;
 	}
 
-	public void setIsDeleted(byte isDeleted) {
+	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 

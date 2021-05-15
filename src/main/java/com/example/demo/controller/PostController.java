@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +24,16 @@ import com.example.demo.respository.AccountRepository;
 import com.example.demo.respository.PostRepository;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class PostController {
 	@Autowired
 	private PostRepository postRepository;
 	@Autowired
 	private AccountRepository accountRepository;
 
-	@GetMapping("/feed/{id}")
-	public Iterable<Post> getFeed(@PathVariable("id") int accountId, @RequestParam("page") int page) {
+	@GetMapping("/feed")
+	public Iterable<Post> getFeed(@RequestParam("id") int accountId, @RequestParam("page") int page) {
+		System.out.println(accountId + " " + page);
 		Account account = accountRepository.findById(accountId).orElse(null);
 		if (account == null) {
 			return new ArrayList<>();
