@@ -43,7 +43,7 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/posts/by-account/{id}")
+	@GetMapping("/posts/byAccount/{id}")
 	public Iterable<Post> getByAccountId(@PathVariable("id") int accountId) {
 		Account account = accountRepository.findById(accountId).orElse(null);
 		if (account == null) {
