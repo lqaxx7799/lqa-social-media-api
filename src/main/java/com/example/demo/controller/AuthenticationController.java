@@ -92,23 +92,25 @@ public class AuthenticationController {
 		
 		System.out.println(profilePicture);
 		
-		File profilePictureFile;
-		 
-        try {
-        	profilePictureFile = uploadPath(savedAccount, profilePicture);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+		if (profilePicture != null && !profilePicture.isEmpty()) {
+			File profilePictureFile;
+			 
+	        try {
+	        	profilePictureFile = uploadPath(savedAccount, profilePicture);
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        }
 
-        try (InputStream in = profilePicture.getInputStream(); OutputStream out = new FileOutputStream(profilePictureFile)) {
-            FileCopyUtils.copy(in, out);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        
-        savedAccount.setProfilePictureUrl(String.format("%s/%d/%s", "profilePictures", savedAccount.getId(), profilePicture.getOriginalFilename()));
-        accountRepository.save(savedAccount);
-        
+	        try (InputStream in = profilePicture.getInputStream(); OutputStream out = new FileOutputStream(profilePictureFile)) {
+	            FileCopyUtils.copy(in, out);
+	        } catch (IOException ex) {
+	            throw new RuntimeException(ex);
+	        }
+	        
+	        savedAccount.setProfilePictureUrl(String.format("%s/%d/%s", "profilePictures", savedAccount.getId(), profilePicture.getOriginalFilename()));
+	        accountRepository.save(savedAccount);
+		}
+		
         return ResponseEntity.ok(savedAccount);
 	}
 	

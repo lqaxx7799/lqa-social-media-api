@@ -96,23 +96,25 @@ public class PostController {
 		
 		Post savedPost = postRepository.save(post);
 		
-		File thumbnailFile;
-		 
-        try {
-        	thumbnailFile = uploadPath(savedPost, thumbnail);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+		if (thumbnail != null && !thumbnail.isEmpty()) {
+			File thumbnailFile;
+			 
+	        try {
+	        	thumbnailFile = uploadPath(savedPost, thumbnail);
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        }
 
-        try (InputStream in = thumbnail.getInputStream(); OutputStream out = new FileOutputStream(thumbnailFile)) {
-            FileCopyUtils.copy(in, out);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        
-        savedPost.setThumbnailUrl(String.format("%s/%d/%s", "thumbnails", savedPost.getId(), thumbnail.getOriginalFilename()));
-        postRepository.save(savedPost);
-        
+	        try (InputStream in = thumbnail.getInputStream(); OutputStream out = new FileOutputStream(thumbnailFile)) {
+	            FileCopyUtils.copy(in, out);
+	        } catch (IOException ex) {
+	            throw new RuntimeException(ex);
+	        }
+	        
+	        savedPost.setThumbnailUrl(String.format("%s/%d/%s", "thumbnails", savedPost.getId(), thumbnail.getOriginalFilename()));
+	        postRepository.save(savedPost);
+		}
+		
         return ResponseEntity.ok(savedPost);
 	}
 	
