@@ -93,6 +93,7 @@ public class PostController {
 		post.setIsDeleted(false);
 		post.setAccount(account);
 		post.setCreatedTime(new Date());
+		post.setThumbnailUrl("");
 		
 		Post savedPost = postRepository.save(post);
 		

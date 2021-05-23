@@ -14,4 +14,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	
 	@Query("SELECT a FROM Account a WHERE a.id IN (SELECT uf.id.followId FROM UserFollowing uf WHERE uf.id.accountId = :accountId)")
 	public Iterable<Account> getFollowing(@Param("accountId") int accountId);
+	
+	public Iterable<Account> findByUsernameContaining(String name);
 }
