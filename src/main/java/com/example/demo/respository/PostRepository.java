@@ -16,5 +16,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
 	@Query("SELECT p FROM Post p WHERE p.account.id IN (SELECT uf.id.followId FROM UserFollowing uf WHERE uf.id.accountId = :accountId)")
 	public Page<Post> getFeed(@Param("accountId") int accountId, Pageable pageable);	
 	
-	public Iterable<Post> findByAccount(Account account);
+	public Iterable<Post> findByAccountOrderByCreatedTimeDesc(Account account);
 }

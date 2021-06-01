@@ -77,6 +77,18 @@ public class AuthenticationController {
 			@ModelAttribute SignUpDTO signUpDTO,
 			@RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture
 	) throws Exception {
+		Account exampleAccount = new Account();
+		exampleAccount.setEmail(signUpDTO.getEmail());
+		
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny();
+		
+		Example<Account> accountExample = Example.of(exampleAccount, exampleMatcher);
+		
+		Account found = accountRepository.findOne(accountExample).orElse(null);
+		if (found != null) {
+			return ResponseEntity.badRequest().body("Email existed");
+		}
+
 		Account account = new Account();
 		account.setBio(signUpDTO.getBio());
 		account.setDateOfBirth(signUpDTO.getDateOfBirth());

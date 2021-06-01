@@ -75,7 +75,7 @@ public class PostController {
 		if (account == null) {
 			return new ArrayList<>();
 		}
-		return postRepository.findByAccount(account);
+		return postRepository.findByAccountOrderByCreatedTimeDesc(account);
 	}
 	
 	@GetMapping("/post/{id}")
